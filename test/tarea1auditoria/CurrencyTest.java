@@ -17,16 +17,21 @@ public class CurrencyTest {
     public CurrencyTest() {
     }
 
+    /*Realiza test para el método universalValue, el cual convierte el valor de una moneda a su valor en moneda universal
+    (En este caso, el USD). Para esta prueba, se utiliza el CLP (peso chileno), con un valor de 680,00, equivalente a 1,02 USD.*/
     @Test
     public void testUniversalValue() {
-        Currency chileanMoney = new Currency("Peso Chileno", 0.0015);
-        assertTrue( chileanMoney.universalValue(680) == 1 );
+        Currency chileanMoney = new Currency("CLP", 0.0015);
+        assertTrue( chileanMoney.universalValue(68000) == 102 );
     }
     
+    /*Prueba de método "valueInThisCurrency", este método realiza conversiones entre dos monedas diferentes.
+    En este ejemplo se convierten 19,00 MXP (pesos mexicanos) a pesos chilenos (653,33 CLP).
+    */
     @Test
     public void testValueInThisCurrency() {
-        Currency chileanMoney = new Currency("Peso Chileno", 0.0015);
-        Currency mexicanMoney = new Currency("Peso Mexicano", 0.052);
-        assertTrue( chileanMoney.valueInThisCurrency(19, mexicanMoney) == 680);
+        Currency chileanMoney = new Currency("CLP", 0.0015);
+        Currency mexicanMoney = new Currency("MXP", 0.052);
+        assertTrue( chileanMoney.valueInThisCurrency(1900, mexicanMoney) == 65333);
     }
 }

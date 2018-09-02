@@ -27,8 +27,8 @@ public class Currency {
 	 * @return El valor en la "moneda universal"
 	 */
 	public Integer universalValue(Integer amount) {
-            int rateToInt =  getRate().intValue();
-            return amount * rateToInt;
+            int valueToMoneyFormat = (int)(amount * getRate());
+            return valueToMoneyFormat;
 	}
 
 	/** 
@@ -63,6 +63,7 @@ public class Currency {
 	*/
 	public Integer valueInThisCurrency(Integer amount, Currency othercurrency) {
             int otherCurrencyToUniversalValue = othercurrency.universalValue(amount);
-            return (int)(otherCurrencyToUniversalValue/getRate());
+            int valueInThisCurrency = (int)(otherCurrencyToUniversalValue/getRate());
+            return valueInThisCurrency;
 	}
 }
