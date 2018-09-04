@@ -4,12 +4,7 @@ public class Money implements Comparable {
 	private int amount;
 	private Currency currency;
 
-	/**
-	 * New Money
-	 * @param amount	Cantidad de dinero
-	 * @param currency	La moneda en la que está el dinero
-	 */
-	Money (Integer amount, Currency currency) {
+		Money (Integer amount, Currency currency) {
 		this.amount = amount;
 		this.currency = currency;
 	}
@@ -39,8 +34,9 @@ public class Money implements Comparable {
 	 *  @return String que representa el dinero
 	 */
 	public String toString() {
-            double clptousd= amount / 100;
-            String value = Double.toString(clptousd)+ " " + currency.getName();
+            int cent = getAmount()%100;
+            int entera = getAmount()/100;
+            String value = Integer.toString(entera)+ "."+ Integer.toString(cent)+ " " + currency.getName();
             return value;
 	}
 	
@@ -49,7 +45,7 @@ public class Money implements Comparable {
 	 * @return valor del dinero en la moneda universal
 	 */
 	public Integer universalValue() {
-		int universal= currency.universalValue(amount);
+		int universal= getCurrency().universalValue(getAmount());
                 return universal;
 	}
 	
@@ -60,7 +56,7 @@ public class Money implements Comparable {
 	 * @return verdadero si son iguales, falso sino.
 	 */
 	public Boolean equals(Money other) {
-		return true;
+            return true;
 	}
 	
 	/**
@@ -71,7 +67,10 @@ public class Money implements Comparable {
          * de las dos cantidades (recuerda convertir antes de sumar!)
 	 */
 	public Money add(Money other) {
-		return this;
+            int moneyConverted = getCurrency().valueInThisCurrency(other.amount, other.currency);            
+            int totalValue = getAmount() + moneyConverted;
+            Money money = new Money (totalValue, getCurrency());
+            return money;
 	}
 
 	/**
@@ -81,7 +80,10 @@ public class Money implements Comparable {
          * de las dos cantidades (recuerda convertir antes de restar!)
 	 */
 	public Money sub(Money other) {
-		return this;
+            int moneyConverted = getCurrency().valueInThisCurrency(other.amount, other.currency);            
+            int totalValue = getAmount() - moneyConverted;
+            Money money = new Money (totalValue, getCurrency());
+            return money;
 	}
 	
 	/**
@@ -89,7 +91,7 @@ public class Money implements Comparable {
 	 * @return True si tengo 0. False sino
 	 */
 	public Boolean isZero() {
-            if (amount == 0) {
+            if (getAmount() == 0) {
                 return true;
             }
             return false;
@@ -100,7 +102,8 @@ public class Money implements Comparable {
 	 * @return nueva instancia de Money, signo invertido.
 	 */
 	public Money negate() {
-            return this;
+            Money money = new Money(getAmount()*-1, getCurrency());
+            return money;
 	}
 	
 	/**
