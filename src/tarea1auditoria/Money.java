@@ -117,6 +117,13 @@ public class Money implements Comparable {
 	 *  1 Si este dinero es más que el otro
 	 */
 	public int compareTo(Object other) {
-		return 0;
+            Money otherMoney = (Money) other;
+            if(getCurrency().universalValue(getAmount()) == getCurrency().universalValue(otherMoney.getAmount())){
+                return 0;
+            }
+            if (getCurrency().universalValue(getAmount()) > getCurrency().universalValue(otherMoney.getAmount())) {
+                return -1;
+            }
+            return 1;            
 	}
 }
