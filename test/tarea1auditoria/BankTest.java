@@ -154,13 +154,18 @@ public class BankTest {
     @Test
     public void testMoneyTransfer() {
         Money money = new Money(300000, clpCurrency);
+        Bank santander = new Bank("Santander",clpCurrency);
         try
         {
             bank.openAccount("000");
-            bank.openAccount("111");
-            bank.transfer("000","111",money);
+            santander.openAccount("111");
+            bank.transfer("000",santander,"111",money);
+            assertTrue(bank.getBalance("000").equals(-300000) && bank.getBalance("111").equals(300000));
         }
         catch (AccountDoesNotExistException e)
+        {
+        }
+        catch (AccountExistsException e)
         {
         }
     }
@@ -171,26 +176,70 @@ public class BankTest {
         Money money = new Money(300000, clpCurrency);
         try
         {
+            bank.openAccount("000");
             bank.transfer("000","111",money);
         }
         catch (AccountDoesNotExistException e)
         {
             accountDoesntExists = true;
         }
+        catch (AccountExistsException e)
+        {
+        }
         assertTrue(accountDoesntExists);
     }
     //Prueba del método transfer
     @Test
     public void testMoneyTransferInSameBank() {
+        Money money = new Money(300000, clpCurrency);
+        try
+        {
+            bank.openAccount("000");
+            bank.openAccount("111");
+            bank.transfer("000","111",money);
+            assertTrue(bank.getBalance("000").equals(-300000) && bank.getBalance("111").equals(300000));
+        }
+        catch (AccountDoesNotExistException e)
+        {
+        }
+        catch (AccountExistsException e)
+        {
+        }
     }
     //Prueba del método addTimedPayment
     @Test
     public void testAddTimedPayment() {
+        Money money = new Money(300000, clpCurrency);
+        Bank santander = new Bank("Santander",clpCurrency);
+        try
+        {
+            bank.openAccount("000");
+            santander.openAccount("111");
+            bank.addTimedPayment("000", "1234", 60, 30, money, santander, "111");
+        }
+        catch (AccountExistsException e)
+        {
+            
+        }
     }
     //Prueba del método removeTimedPayment
     @Test
     public void testRemoveTimedPayment() {
+        Money money = new Money(300000, clpCurrency);
+        Bank santander = new Bank("Santander",clpCurrency);
+        try
+        {
+            bank.openAccount("000");
+            santander.openAccount("111");
+            bank.addTimedPayment("000", "1234", 60, 30, money, santander, "111");
+            bank.removeTimedPayment("000", "1234");
+        }
+        catch (AccountExistsException e)
+        {
+            
+        }
     }
+    
     //Prueba del método tick
     @Test
     public void testTick() {
