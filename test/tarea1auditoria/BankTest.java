@@ -46,7 +46,8 @@ public class BankTest {
         boolean accountAlreadyExists = false;
         try
         {
-            bank.openAccount("123456789");
+            bank.openAccount("111");
+            bank.openAccount("111");
         }
         catch (AccountExistsException e)
         {
@@ -61,11 +62,16 @@ public class BankTest {
         Money money = new Money(300000, clpCurrency);
         try
         {
+            bank.openAccount("000");
             bank.deposit("000", money);
+            assertTrue(bank.getBalance("000").equals(300000));
         }
         catch (AccountDoesNotExistException e)
         {
         }
+        catch (AccountExistsException e)
+        {
+        }     
     }
     //Prueba de excepción AccountDoesNotExistException en el método deposit
     @Test
@@ -80,6 +86,7 @@ public class BankTest {
         {
             accountDoesntExists = true;
         }
+        
         assertTrue(accountDoesntExists);
     }
     //Prueba del método withdraw
@@ -88,11 +95,16 @@ public class BankTest {
         Money money = new Money(300000, clpCurrency);
         try
         {
+            bank.openAccount("000");
             bank.withdraw("000", money);
+            assertTrue(bank.getBalance("000").equals(-300000));
         }
         catch (AccountDoesNotExistException e)
         {
         }
+        catch (AccountExistsException e)
+        {
+        }     
     }
     //Prueba de excepción AccountDoesNotExistException en el método withdraw
     @Test
@@ -114,11 +126,15 @@ public class BankTest {
     public void testGetBalance() {
         try
         {
-            bank.getBalance("000");
+            bank.openAccount("000");
+            assertTrue(bank.getBalance("000").equals(0));
         }
         catch (AccountDoesNotExistException e)
         {
         }
+        catch (AccountExistsException e)
+        {
+        }   
     }
     //Prueba de excepción AccountDoesNotExistException en el método getBalance
     @Test
@@ -140,6 +156,8 @@ public class BankTest {
         Money money = new Money(300000, clpCurrency);
         try
         {
+            bank.openAccount("000");
+            bank.openAccount("111");
             bank.transfer("000","111",money);
         }
         catch (AccountDoesNotExistException e)
