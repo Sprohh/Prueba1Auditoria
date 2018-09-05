@@ -56,7 +56,11 @@ public class Money implements Comparable {
 	 * @return verdadero si son iguales, falso sino.
 	 */
 	public Boolean equals(Money other) {
-            return true;
+            Money otherMoney = new Money(other.amount, other.currency);
+            if (getCurrency().universalValue(amount) == getCurrency().universalValue(other.amount)) {
+                return true;
+            }
+            return false;
 	}
 	
 	/**
@@ -69,7 +73,7 @@ public class Money implements Comparable {
 	public Money add(Money other) {
             int moneyConverted = getCurrency().valueInThisCurrency(other.amount, other.currency);            
             int totalValue = getAmount() + moneyConverted;
-            Money money = new Money (totalValue, getCurrency());
+            Money money = new Money (totalValue, other.currency);
             return money;
 	}
 
@@ -82,7 +86,7 @@ public class Money implements Comparable {
 	public Money sub(Money other) {
             int moneyConverted = getCurrency().valueInThisCurrency(other.amount, other.currency);            
             int totalValue = getAmount() - moneyConverted;
-            Money money = new Money (totalValue, getCurrency());
+            Money money = new Money (totalValue, other.currency);
             return money;
 	}
 	
