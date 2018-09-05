@@ -26,12 +26,12 @@ public class CurrencyTest {
     }
     
     /*Prueba de método "valueInThisCurrency", este método realiza conversiones entre dos monedas diferentes.
-    En este ejemplo se convierten 19,00 MXP (pesos mexicanos) a pesos chilenos (653,33 CLP).
+    En este ejemplo se convierten 1,00 MXP (peso mexicanos) a pesos chilenos (33,33 CLP).
     */
     @Test
     public void testValueInThisCurrency() {
         Currency chileanMoney = new Currency("CLP", 0.0015);
         Currency mexicanMoney = new Currency("MXP", 0.052);
-        assertTrue( chileanMoney.valueInThisCurrency(1900, mexicanMoney) == 65333);
+        assertTrue( chileanMoney.valueInThisCurrency(100, mexicanMoney) == 3333);
     }
 }
