@@ -38,12 +38,17 @@ public class Bank {
 	 * @param accountid ID de la cuenta
 	 * @throws AccountExistsException si la cuenta ya existe
 	 */
+        
+        /* Este método no cumplía su propósito, en vez de ello, solo devolvía una cuenta, sin abrirla en el banco,
+        para solucionar este error, se ha agregado el comando put, acompañado de la apertura de una cuemnta con el
+        Id entregado */
 	public void openAccount(String accountid) throws AccountExistsException {
-		if (accountlist.containsKey(accountid)) {
-			throw new AccountExistsException();
+		if (! accountlist.containsKey(accountid)) {
+                    Account account = new Account(accountid, getCurrency());
+                    accountlist.put(accountid, account);
 		}
 		else {
-			accountlist.get(accountid);
+                    throw new AccountExistsException();
 		}
 	}
 	
@@ -53,14 +58,18 @@ public class Bank {
 	 * @param money Cuanto Dinero.
 	 * @throws AccountDoesNotExistException si la cuenta no existe
 	 */
+        
+        /* El test arrojó que este método no funcionaba como corresponde, se ha solucionado esto para
+        lanzar la excepción solo en el caso en que la cuenta no exista */
+        
 	public void deposit(String accountid, Money money) throws AccountDoesNotExistException {
 		if (accountlist.containsKey(accountid)) {
-			throw new AccountDoesNotExistException();
-		}
+                    Account account = accountlist.get(accountid);
+                    account.deposit(money);
+                }
 		else {
-			Account account = accountlist.get(accountid);
-			account.deposit(money);
-		}
+                    throw new AccountDoesNotExistException();
+                }
 	}
 	
 	/**
@@ -69,13 +78,15 @@ public class Bank {
 	 * @param money cantidad a girar
 	 * @throws AccountDoesNotExistException si la cuenta no existe
 	 */
+        
+        //Este método llamaba a account.deposit, se ha cambiado por account.withdraw
 	public void withdraw(String accountid, Money money) throws AccountDoesNotExistException {
 		if (!accountlist.containsKey(accountid)) {
 			throw new AccountDoesNotExistException();
 		}
 		else {
 			Account account = accountlist.get(accountid);
-			account.deposit(money);
+			account.withdraw(money);
 		}
 	}
 	
@@ -119,8 +130,11 @@ public class Bank {
 	 * @param amount cantidad de dinero a transferir
 	 * @throws AccountDoesNotExistException si alguna de las cuentas no existe
 	 */
+        
+        /* Este método en su tercer parámetro, ponia "fromaccount" en vez de "toaccount", es decir, la cuenta se transfería dinero a si misma
+        cuando quería transferir dinero a otra persona, para solucionar esto, se ha cambiado este parámetro a "toaccount" */
 	public void transfer(String fromaccount, String toaccount, Money amount) throws AccountDoesNotExistException {
-		transfer(fromaccount, this, fromaccount, amount);
+		transfer(fromaccount, this, toaccount, amount);
 	}
 
 	/**

@@ -42,7 +42,7 @@ public class BankTest {
     }
     //Prueba de excepción AccountExistsException en el método openAccount
     @Test
-    public void testAccountAlreadyExist() {
+    public void testOpenAccountAlreadyExist() {
         boolean accountAlreadyExists = false;
         try
         {
@@ -92,12 +92,14 @@ public class BankTest {
     //Prueba del método withdraw
     @Test
     public void testWithdraw() {
-        Money money = new Money(300000, clpCurrency);
+        Money depositMoney = new Money(600000, clpCurrency);
+        Money withdrawMoney = new Money(300000, clpCurrency);
         try
         {
             bank.openAccount("000");
-            bank.withdraw("000", money);
-            assertTrue(bank.getBalance("000").equals(-300000));
+            bank.deposit("000", depositMoney);
+            bank.withdraw("000", withdrawMoney);
+            assertTrue(bank.getBalance("000").equals(300000));
         }
         catch (AccountDoesNotExistException e)
         {
@@ -150,17 +152,19 @@ public class BankTest {
         }
         assertTrue(accountDoesntExists);
     }
-    //Prueba del método transfer
+    //Prueba del método transfer (Se cargan 600000 CLP a la cuenta "000", luego envía 150000 a la cuenta "111"
     @Test
     public void testMoneyTransfer() {
-        Money money = new Money(300000, clpCurrency);
+        Money depositMoney = new Money(600000, clpCurrency);
+        Money transferMoney = new Money(150000, clpCurrency);
         Bank santander = new Bank("Santander",clpCurrency);
         try
         {
             bank.openAccount("000");
+            bank.deposit("000", depositMoney);
             santander.openAccount("111");
-            bank.transfer("000",santander,"111",money);
-            assertTrue(bank.getBalance("000").equals(-300000) && bank.getBalance("111").equals(300000));
+            bank.transfer("000",santander,"111",transferMoney);
+            assertTrue(bank.getBalance("000").equals(450000) && bank.getBalance("111").equals(150000));
         }
         catch (AccountDoesNotExistException e)
         {
@@ -177,7 +181,7 @@ public class BankTest {
         try
         {
             bank.openAccount("000");
-            bank.transfer("000","111",money);
+            bank.transfer("000","999",money);
         }
         catch (AccountDoesNotExistException e)
         {
@@ -191,13 +195,15 @@ public class BankTest {
     //Prueba del método transfer
     @Test
     public void testMoneyTransferInSameBank() {
-        Money money = new Money(300000, clpCurrency);
+        Money depositMoney = new Money(600000, clpCurrency);
+        Money transferMoney = new Money(150000, clpCurrency);
         try
         {
             bank.openAccount("000");
             bank.openAccount("111");
-            bank.transfer("000","111",money);
-            assertTrue(bank.getBalance("000").equals(-300000) && bank.getBalance("111").equals(300000));
+            bank.deposit("000", depositMoney);
+            bank.transfer("000","111",transferMoney);
+            assertTrue(bank.getBalance("000").equals(450000) && bank.getBalance("111").equals(150000));
         }
         catch (AccountDoesNotExistException e)
         {
@@ -225,16 +231,22 @@ public class BankTest {
     //Prueba del método removeTimedPayment
     @Test
     public void testRemoveTimedPayment() {
+        Money depositMoney = new Money(600000, clpCurrency);
         Money money = new Money(300000, clpCurrency);
         Bank santander = new Bank("Santander",clpCurrency);
         try
         {
             bank.openAccount("000");
+            bank.deposit("000", depositMoney);
             santander.openAccount("111");
             bank.addTimedPayment("000", "1234", 60, 30, money, santander, "111");
             bank.removeTimedPayment("000", "1234");
         }
         catch (AccountExistsException e)
+        {
+            
+        }
+        catch (AccountDoesNotExistException e)
         {
             
         }

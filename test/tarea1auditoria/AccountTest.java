@@ -32,29 +32,40 @@ public class AccountTest {
     public void testAddTimedPayment() {
         Money money = new Money(300000, clpCurrency);
         Bank santander = new Bank("Santander",clpCurrency);
+        account.addTimedPayment("1234", 30, 30, money, santander, "111");
+        assertTrue(account.timedPaymentExists("1234"));
     }
     
     @Test
     public void testRemoveTimedPayment() {
+        Money money = new Money(300000, clpCurrency);
+        Bank santander = new Bank("Santander",clpCurrency);
+        account.addTimedPayment("1234", 30, 30, money, santander, "111");
+        account.removeTimedPayment("1234");
+        assertFalse(account.timedPaymentExists("1234"));
     }
     
     @Test
     public void testTimedPaymentExists() {
+        Money money = new Money(300000, clpCurrency);
+        Bank santander = new Bank("Santander",clpCurrency);
+        account.addTimedPayment("1234", 30, 30, money, santander, "111");
+        assertTrue(account.timedPaymentExists("1234"));
     }
     
     @Test
     public void testDeposit() {
+        Money money = new Money(300000, clpCurrency);
+        account.deposit(money);
+        assertTrue(account.getBalance().getAmount()==300000);
     }
     
     @Test
     public void testWithdraw() {
-    }
-    
-    @Test
-    public void testGetBalance() {
-    }
-    
-    @Test
-    public void testTick() {
+        Money depositMoney = new Money(600000, clpCurrency);
+        account.deposit(depositMoney);
+        Money withdrawMoney = new Money(300000, clpCurrency);
+        account.withdraw(withdrawMoney);
+        assertTrue(account.getBalance().getAmount()==300000);
     }
 }
