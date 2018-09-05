@@ -56,7 +56,10 @@ public class Money implements Comparable {
 	 * @return verdadero si son iguales, falso sino.
 	 */
 	public Boolean equals(Money other) {
-            return other.currency.universalValue(other.amount).equals(getCurrency().universalValue(getAmount()));
+            int currentMoneyToUniversalValue = getCurrency().universalValue(getAmount());
+            int otherMoneyToUniversalValue = other.currency.universalValue(other.amount);
+            boolean moneyIsEqual = currentMoneyToUniversalValue == otherMoneyToUniversalValue;
+            return moneyIsEqual;
 	}
 	
 	/**

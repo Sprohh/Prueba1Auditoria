@@ -36,9 +36,24 @@ public class MoneyTest {
         assertTrue(money.universalValue() == 102);
     }
     
+    //Verifica que la cantidad entre dos monedas sea la misma (En este caso, 1,02 USD, equivale a 684,93 CLP)
     @Test
     public void equals(){
-        
+        Currency chileanMoney = new Currency ("CLP", 0.0015);
+        Currency usdMoney = new Currency("USD", 1.0);
+        Money money = new Money(68493, chileanMoney);
+        Money otherMoney = new Money(102, usdMoney);
+        assertTrue(money.equals(otherMoney));
+    }
+    
+    //Verifica que la cantidad entre dos monedas no sea la misma (En este caso, 2 USD no equivale a 684,93 CLP)
+    @Test
+    public void testNotEquals(){
+        Currency chileanMoney = new Currency ("CLP", 0.0015);
+        Currency usdMoney = new Currency("USD", 1.0);
+        Money money = new Money(68493, chileanMoney);
+        Money otherMoney = new Money(200, usdMoney);
+        assertFalse(money.equals(otherMoney));
     }
     
     //Se añade 1 MXP a 600CLP (1 MXP = 33,33 CLP), por lo que el resultado debiese ser 633,33CLP
