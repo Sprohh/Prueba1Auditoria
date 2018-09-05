@@ -41,24 +41,26 @@ public class MoneyTest {
         
     }
     
+    //Se añade 1 MXP a 600CLP (1 MXP = 33,33 CLP), por lo que el resultado debiese ser 633,33CLP
     @Test
     public void testAdd(){
         Currency chileanMoney = new Currency ("CLP", 0.0015);
         Currency mexicanMoney = new Currency("MXP", 0.052);
-        Money money = new Money(1000, chileanMoney);
-        Money otherMoney = new Money(1000, mexicanMoney);
-        Money result = new Money (35666, mexicanMoney);
-        assertEquals(result, money.add(otherMoney));            
+        Money money = new Money(60000, chileanMoney);
+        Money otherMoney = new Money(100, mexicanMoney);
+        int expectedResult = 63333;
+        assertTrue(money.add(otherMoney).getAmount().equals(expectedResult));            
     }    
     
+    //Se resta 1 MXP a 600CLP (1 MXP = 33,33 CLP), por lo que el resultado debiese ser 566,67 CLP
     @Test
     public void testSub(){
         Currency chileanMoney = new Currency ("CLP", 0.0015);
         Currency mexicanMoney = new Currency("MXP", 0.052);
-        Money money = new Money(1000, chileanMoney);
-        Money otherMoney = new Money(1000, mexicanMoney);
-        Money result = new Money (-33666, mexicanMoney);
-        assertEquals(result, money.sub(otherMoney));            
+        Money money = new Money(60000, chileanMoney);
+        Money otherMoney = new Money(100, mexicanMoney);
+        int expectedResult = 56667;
+        assertTrue(money.sub(otherMoney).getAmount().equals(expectedResult));        
     }  
     
     /*Test para verificar si el monto de dinero es 0, si resulta ser 0 devolvera True */
@@ -81,8 +83,7 @@ public class MoneyTest {
     public void testNegative() {
         Currency currency = new Currency ("CLP", 0.0015);
         Money money = new Money(1000, currency );
-        Money result = new Money (-1000, currency);
-        assertEquals(result, money.negate());
+        assertTrue(money.negate().getAmount() == -1000);
     }
     
     
