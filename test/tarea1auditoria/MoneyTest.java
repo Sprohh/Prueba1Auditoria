@@ -30,7 +30,7 @@ public class MoneyTest {
     /*Test el cual convierte el valor de una moneda a su valor en moneda universal, 
     Para esta prueba, se utiliza el CLP (peso chileno), con un valor de 680,00, equivalente a 1,02 USD*/
     @Test
-    public void universalValue(){
+    public void testUniversalValue(){
         Currency currency = new Currency ("CLP", 0.0015);
         Money money = new Money(68000, currency );  
         assertTrue(money.universalValue() == 102);
@@ -38,7 +38,7 @@ public class MoneyTest {
     
     //Verifica que la cantidad entre dos monedas sea la misma (En este caso, 1,02 USD, equivale a 684,93 CLP)
     @Test
-    public void equals(){
+    public void testEquals(){
         Currency chileanMoney = new Currency ("CLP", 0.0015);
         Currency usdMoney = new Currency("USD", 1.0);
         Money money = new Money(68493, chileanMoney);
