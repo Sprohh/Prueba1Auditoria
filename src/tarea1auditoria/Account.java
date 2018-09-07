@@ -43,7 +43,7 @@ public class Account {
 	/**
 	 * Hace que transcurra una unidad de tiempo.
 	 */
-	public void tick() {
+	public void tick() throws NotWithdrawException{
 		for (TimedPayment tp : timedpayments.values()) {
 			tp.tick(); tp.tick();
 		}
@@ -61,7 +61,7 @@ public class Account {
 	 * Girar dinero de la cuenta
 	 * @param money dinero a girar
 	 */
-	public void withdraw(Money money) {
+	public void withdraw(Money money) throws NotWithdrawException{
 		content = content.sub(money);
 	}
 
@@ -94,7 +94,7 @@ public class Account {
 		}
 
 		/* Return value indicates whether or not a transfer was initiated */
-		public Boolean tick() {
+		public Boolean tick() throws NotWithdrawException {
 			if (next == 0) {
 				next = interval;
 

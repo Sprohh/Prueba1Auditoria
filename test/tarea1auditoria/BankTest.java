@@ -106,7 +106,10 @@ public class BankTest {
         }
         catch (AccountExistsException e)
         {
-        }     
+        }  
+        catch (NotWithdrawException e)
+        {
+        }  
     }
     //Prueba de excepción AccountDoesNotExistException en el método withdraw
     @Test
@@ -121,6 +124,9 @@ public class BankTest {
         {
             accountDoesntExists = true;
         }
+        catch (NotWithdrawException e)
+        {
+        }        
         assertTrue(accountDoesntExists);
     }
     //Prueba del método getBalance
@@ -172,6 +178,9 @@ public class BankTest {
         catch (AccountExistsException e)
         {
         }
+        catch (NotWithdrawException e)
+        {
+        }         
     }
     //Prueba de excepción AccountDoesNotExistException en el método transfer
     @Test
@@ -190,6 +199,9 @@ public class BankTest {
         catch (AccountExistsException e)
         {
         }
+        catch (NotWithdrawException e)
+        {
+        }  
         assertTrue(accountDoesntExists);
     }
     //Prueba del método transfer
@@ -211,6 +223,9 @@ public class BankTest {
         catch (AccountExistsException e)
         {
         }
+        catch (NotWithdrawException e)
+        {
+        }  
     }
     //Prueba del método addTimedPayment
     @Test

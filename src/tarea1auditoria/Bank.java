@@ -80,7 +80,7 @@ public class Bank {
 	 */
         
         //Este método llamaba a account.deposit, se ha cambiado por account.withdraw
-	public void withdraw(String accountid, Money money) throws AccountDoesNotExistException {
+	public void withdraw(String accountid, Money money) throws AccountDoesNotExistException, NotWithdrawException {
 		if (!accountlist.containsKey(accountid)) {
 			throw new AccountDoesNotExistException();
 		}
@@ -113,7 +113,7 @@ public class Bank {
 	 * @param amount cantidad a transferir
 	 * @throws AccountDoesNotExistException si alguna de las cuentas no existe
 	 */
-	public void transfer(String fromaccount, Bank tobank, String toaccount, Money amount) throws AccountDoesNotExistException {
+	public void transfer(String fromaccount, Bank tobank, String toaccount, Money amount) throws AccountDoesNotExistException, NotWithdrawException {
 		if (!accountlist.containsKey(fromaccount) || !tobank.accountlist.containsKey(toaccount)) {
 			throw new AccountDoesNotExistException();
 		}
@@ -133,7 +133,7 @@ public class Bank {
         
         /* Este método en su tercer parámetro, ponia "fromaccount" en vez de "toaccount", es decir, la cuenta se transfería dinero a si misma
         cuando quería transferir dinero a otra persona, para solucionar esto, se ha cambiado este parámetro a "toaccount" */
-	public void transfer(String fromaccount, String toaccount, Money amount) throws AccountDoesNotExistException {
+	public void transfer(String fromaccount, String toaccount, Money amount) throws AccountDoesNotExistException, NotWithdrawException {
 		transfer(fromaccount, this, toaccount, amount);
 	}
 
@@ -165,7 +165,7 @@ public class Bank {
 	/**
 	 * Una unidad de tiempo pasa en el sistema.
 	 */
-	public void tick() throws AccountDoesNotExistException {
+	public void tick() throws AccountDoesNotExistException, NotWithdrawException {
 		for (Account account : accountlist.values()) {
 			account.tick();
 		}

@@ -62,10 +62,33 @@ public class AccountTest {
     
     @Test
     public void testWithdraw() {
-        Money depositMoney = new Money(600000, clpCurrency);
-        account.deposit(depositMoney);
-        Money withdrawMoney = new Money(300000, clpCurrency);
-        account.withdraw(withdrawMoney);
-        assertTrue(account.getBalance().getAmount()==300000);
+        try
+        {
+            Money depositMoney = new Money(600000, clpCurrency);
+            account.deposit(depositMoney);
+            Money withdrawMoney = new Money(300000, clpCurrency);
+            account.withdraw(withdrawMoney);
+            assertTrue(account.getBalance().getAmount()==300000);
+        }
+        catch (NotWithdrawException e)
+        {
+        }  
     }
+    
+    @Test
+    public void testNotWithdraw() {
+        boolean notWithdrawException= false;
+        try
+        {
+            Money depositMoney = new Money(600000, clpCurrency);
+            account.deposit(depositMoney);
+            Money withdrawMoney = new Money(700000, clpCurrency);
+            account.withdraw(withdrawMoney);
+        }
+        catch (NotWithdrawException e)
+        {
+            notWithdrawException= true;
+        }  
+        assertTrue(notWithdrawException);
+    }    
 }
