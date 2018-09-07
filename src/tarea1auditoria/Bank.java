@@ -62,7 +62,7 @@ public class Bank {
         /* El test arrojó que este método no funcionaba como corresponde, se ha solucionado esto para
         lanzar la excepción solo en el caso en que la cuenta no exista */
         
-	public void deposit(String accountid, Money money) throws AccountDoesNotExistException {
+	public void deposit(String accountid, Money money) throws AccountDoesNotExistException, NegativeAddException {
 		if (accountlist.containsKey(accountid)) {
                     Account account = accountlist.get(accountid);
                     account.deposit(money);
@@ -113,7 +113,7 @@ public class Bank {
 	 * @param amount cantidad a transferir
 	 * @throws AccountDoesNotExistException si alguna de las cuentas no existe
 	 */
-	public void transfer(String fromaccount, Bank tobank, String toaccount, Money amount) throws AccountDoesNotExistException, NotWithdrawException {
+	public void transfer(String fromaccount, Bank tobank, String toaccount, Money amount) throws AccountDoesNotExistException, NotWithdrawException, NegativeAddException {
 		if (!accountlist.containsKey(fromaccount) || !tobank.accountlist.containsKey(toaccount)) {
 			throw new AccountDoesNotExistException();
 		}
@@ -133,7 +133,7 @@ public class Bank {
         
         /* Este método en su tercer parámetro, ponia "fromaccount" en vez de "toaccount", es decir, la cuenta se transfería dinero a si misma
         cuando quería transferir dinero a otra persona, para solucionar esto, se ha cambiado este parámetro a "toaccount" */
-	public void transfer(String fromaccount, String toaccount, Money amount) throws AccountDoesNotExistException, NotWithdrawException {
+	public void transfer(String fromaccount, String toaccount, Money amount) throws AccountDoesNotExistException, NotWithdrawException, NegativeAddException {
 		transfer(fromaccount, this, toaccount, amount);
 	}
 
@@ -165,7 +165,7 @@ public class Bank {
 	/**
 	 * Una unidad de tiempo pasa en el sistema.
 	 */
-	public void tick() throws AccountDoesNotExistException, NotWithdrawException {
+	public void tick() throws AccountDoesNotExistException, NotWithdrawException, NegativeAddException {
 		for (Account account : accountlist.values()) {
 			account.tick();
 		}

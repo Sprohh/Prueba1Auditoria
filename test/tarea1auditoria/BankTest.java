@@ -71,7 +71,10 @@ public class BankTest {
         }
         catch (AccountExistsException e)
         {
-        }     
+        }   
+        catch (NegativeAddException e)
+        {
+        }  
     }
     //Prueba de excepción AccountDoesNotExistException en el método deposit
     @Test
@@ -86,7 +89,9 @@ public class BankTest {
         {
             accountDoesntExists = true;
         }
-        
+        catch (NegativeAddException e)
+        {
+        } 
         assertTrue(accountDoesntExists);
     }
     //Prueba del método withdraw
@@ -109,7 +114,10 @@ public class BankTest {
         }  
         catch (NotWithdrawException e)
         {
-        }  
+        }          
+        catch (NegativeAddException e)
+        {
+        } 
     }
     //Prueba de excepción AccountDoesNotExistException en el método withdraw
     @Test
@@ -180,7 +188,10 @@ public class BankTest {
         }
         catch (NotWithdrawException e)
         {
-        }         
+        }   
+        catch (NegativeAddException e)
+        {
+        } 
     }
     //Prueba de excepción AccountDoesNotExistException en el método transfer
     @Test
@@ -202,6 +213,9 @@ public class BankTest {
         catch (NotWithdrawException e)
         {
         }  
+        catch (NegativeAddException e)
+        {
+        } 
         assertTrue(accountDoesntExists);
     }
     //Prueba del método transfer
@@ -226,6 +240,9 @@ public class BankTest {
         catch (NotWithdrawException e)
         {
         }  
+        catch (NegativeAddException e)
+        {
+        } 
     }
     //Prueba del método addTimedPayment
     @Test
@@ -258,13 +275,14 @@ public class BankTest {
             bank.removeTimedPayment("000", "1234");
         }
         catch (AccountExistsException e)
-        {
-            
+        {            
         }
         catch (AccountDoesNotExistException e)
-        {
-            
+        {            
         }
+        catch (NegativeAddException e)
+        {
+        } 
     }
     
     //Prueba del método tick

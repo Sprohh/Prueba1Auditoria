@@ -69,11 +69,18 @@ public class Money implements Comparable {
 	 * @return un nuevo objeto dinero, que tiene la misma moneda que este objeto, pero la suma
          * de las dos cantidades (recuerda convertir antes de sumar!)
 	 */
-	public Money add(Money other) {
-            int moneyConverted = getCurrency().valueInThisCurrency(other.amount, other.currency);            
-            int totalValue = getAmount() + moneyConverted;
-            Money money = new Money (totalValue, getCurrency());
-            return money;
+	public Money add(Money other) throws NegativeAddException{
+            int moneyConverted = getCurrency().valueInThisCurrency(other.amount, other.currency);  
+            if (moneyConverted < 0) 
+            {
+                throw new NegativeAddException();
+            }        
+            else
+            {
+                int totalValue = getAmount() + moneyConverted;
+                Money money = new Money (totalValue, getCurrency());
+                return money;
+            }
 	}
 
 	/**

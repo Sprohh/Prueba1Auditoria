@@ -59,12 +59,17 @@ public class MoneyTest {
     //Se añade 1 MXP a 600CLP (1 MXP = 33,33 CLP), por lo que el resultado debiese ser 633,33CLP
     @Test
     public void testAdd(){
-        Currency chileanMoney = new Currency ("CLP", 0.0015);
-        Currency mexicanMoney = new Currency("MXP", 0.052);
-        Money money = new Money(60000, chileanMoney);
-        Money otherMoney = new Money(100, mexicanMoney);
-        int expectedResult = 63333;
-        assertTrue(money.add(otherMoney).getAmount().equals(expectedResult));            
+        try{
+            Currency chileanMoney = new Currency ("CLP", 0.0015);
+            Currency mexicanMoney = new Currency("MXP", 0.052);
+            Money money = new Money(60000, chileanMoney);
+            Money otherMoney = new Money(100, mexicanMoney);
+            int expectedResult = 63333;
+            assertTrue(money.add(otherMoney).getAmount().equals(expectedResult)); 
+        }
+        catch (NegativeAddException e)
+        {
+        }        
     }    
     
     //Se resta 1 MXP a 600CLP (1 MXP = 33,33 CLP), por lo que el resultado debiese ser 566,67 CLP

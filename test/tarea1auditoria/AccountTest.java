@@ -55,10 +55,29 @@ public class AccountTest {
     
     @Test
     public void testDeposit() {
-        Money money = new Money(300000, clpCurrency);
-        account.deposit(money);
-        assertTrue(account.getBalance().getAmount()==300000);
+        try{
+            Money money = new Money(300000, clpCurrency);
+            account.deposit(money);
+            assertTrue(account.getBalance().getAmount()==300000);
+        }
+        catch (NegativeAddException e)
+        {
+        } 
     }
+    
+    @Test
+    public void testNegativeDeposit() {
+        boolean negativeAddException = false;
+        try{
+            Money money = new Money(-300000, clpCurrency);
+            account.deposit(money);
+        }
+        catch (NegativeAddException e)
+        {
+            negativeAddException = true;
+        } 
+        assertTrue(negativeAddException);
+    }    
     
     @Test
     public void testWithdraw() {
@@ -73,6 +92,9 @@ public class AccountTest {
         catch (NotWithdrawException e)
         {
         }  
+        catch (NegativeAddException e)
+        {
+        } 
     }
     
     @Test
@@ -89,6 +111,9 @@ public class AccountTest {
         {
             notWithdrawException= true;
         }  
+        catch (NegativeAddException e)
+        {
+        } 
         assertTrue(notWithdrawException);
     }    
 }

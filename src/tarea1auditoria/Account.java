@@ -43,7 +43,7 @@ public class Account {
 	/**
 	 * Hace que transcurra una unidad de tiempo.
 	 */
-	public void tick() throws NotWithdrawException{
+	public void tick() throws NotWithdrawException, NegativeAddException{
 		for (TimedPayment tp : timedpayments.values()) {
 			tp.tick(); tp.tick();
 		}
@@ -53,7 +53,7 @@ public class Account {
 	 * Depositar dinero en la cuenta
 	 * @param money dinero a depositar
 	 */
-	public void deposit(Money money) {
+	public void deposit(Money money) throws NegativeAddException{
 		content = content.add(money);
 	}
 	
@@ -94,7 +94,7 @@ public class Account {
 		}
 
 		/* Return value indicates whether or not a transfer was initiated */
-		public Boolean tick() throws NotWithdrawException {
+		public Boolean tick() throws NotWithdrawException, NegativeAddException {
 			if (next == 0) {
 				next = interval;
 
