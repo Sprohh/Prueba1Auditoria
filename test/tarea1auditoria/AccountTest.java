@@ -28,6 +28,7 @@ public class AccountTest {
         account = new Account("000", clpCurrency);
     }
     
+    /*Realizar un pago y verificar que realmente se hizo el pago mediante el ID: 1234*/
     @Test
     public void testAddTimedPayment() {
         Money money = new Money(300000, clpCurrency);
@@ -36,6 +37,7 @@ public class AccountTest {
         assertTrue(account.timedPaymentExists("1234"));
     }
     
+    /*Eliminar un pago mediante el ID : 1234*/
     @Test
     public void testRemoveTimedPayment() {
         Money money = new Money(300000, clpCurrency);
@@ -45,6 +47,7 @@ public class AccountTest {
         assertFalse(account.timedPaymentExists("1234"));
     }
     
+    /*Verificar mediante el ID si un pago existe ID: 1234*/
     @Test
     public void testTimedPaymentExists() {
         Money money = new Money(300000, clpCurrency);
@@ -53,6 +56,7 @@ public class AccountTest {
         assertTrue(account.timedPaymentExists("1234"));
     }
     
+    /*Depositar dinero en la cuenta*/
     @Test
     public void testDeposit() {
         try{
@@ -65,6 +69,7 @@ public class AccountTest {
         } 
     }
     
+    /*Depositar dinero negativo (-300000), debe devolver una excepción y no se podra realizar el deposito*/
     @Test
     public void testNegativeDeposit() {
         boolean negativeAddException = false;
@@ -79,6 +84,8 @@ public class AccountTest {
         assertTrue(negativeAddException);
     }    
     
+    
+    /*Retirar dinero, 300000 de 600000 previamente depositados */
     @Test
     public void testWithdraw() {
         try
@@ -97,6 +104,7 @@ public class AccountTest {
         } 
     }
     
+    /*Retirar una cantidad de dinero mayor a la depositada, debe retornar una excepcion sin permitir el retiro del dinero*/
     @Test
     public void testNotWithdraw() {
         boolean notWithdrawException= false;

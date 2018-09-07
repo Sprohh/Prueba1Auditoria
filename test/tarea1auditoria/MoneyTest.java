@@ -104,6 +104,7 @@ public class MoneyTest {
         assertFalse(money.isZero());
     }
     
+    /*Verificar si cambia un numero de positivo a negativo Input: 1000 Output: -1000*/
     @Test
     public void testNegative() {
         Currency currency = new Currency ("CLP", 0.0015);
