@@ -5,6 +5,8 @@
  */
 package tarea1auditoria;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -123,5 +125,52 @@ public class AccountTest {
         {
         } 
         assertTrue(notWithdrawException);
-    }    
+    }
+    
+    @Test
+    public void testTick() {        
+        Money money = new Money(300000, clpCurrency);
+        Bank santander = new Bank("Santander",clpCurrency);
+        account.addTimedPayment("1234", 30, 0, money, santander, "111");
+        try {
+            account.tick();
+        } catch (NotWithdrawException ex) {
+        } catch (NegativeAddException ex) {
+        }
+        assertTrue(account.timedPaymentExists("1234"));
+    }
+    
+    @Test
+    public void testExceptionWhenTimedPaymentToAccountThatExists() {
+        Boolean accountDoesntExists = false;
+        Money money = new Money(300000, clpCurrency);
+        Bank santander = new Bank("Santander",clpCurrency);
+        try {
+        santander.openAccount("111");
+        account.deposit(money);
+        Money timedPaymentMoney = new Money(150000, clpCurrency);
+        account.addTimedPayment("1234", 0, 0, timedPaymentMoney, santander, "111");
+        account.tick();
+        } catch (NotWithdrawException ex) {
+        } catch (NegativeAddException ex) {
+        } catch (AccountExistsException ex) {
+        }
+        assertTrue(account.timedPaymentExists("1234"));
+    }
+    
+    @Test
+    public void testExceptionWhenTimedPaymentIsToAccountThatDoesntExists() {
+        Boolean accountDoesntExists = false;
+        Money money = new Money(300000, clpCurrency);
+        Bank santander = new Bank("Santander",clpCurrency);
+        try {
+        account.deposit(money);
+        Money timedPaymentMoney = new Money(150000, clpCurrency);
+        account.addTimedPayment("1234", 0, 0, timedPaymentMoney, santander, "111");
+        account.tick();
+        } catch (NotWithdrawException ex) {
+        } catch (NegativeAddException ex) {
+        }
+        assertTrue(account.timedPaymentExists("1234"));
+    }
 }

@@ -45,7 +45,7 @@ public class Account {
 	 */
 	public void tick() throws NotWithdrawException, NegativeAddException{
 		for (TimedPayment tp : timedpayments.values()) {
-			tp.tick(); tp.tick();
+			tp.tick();
 		}
 	}
 	
@@ -97,7 +97,6 @@ public class Account {
 		public Boolean tick() throws NotWithdrawException, NegativeAddException {
 			if (next == 0) {
 				next = interval;
-
 				fromaccount.withdraw(amount);
 				try {
 					tobank.deposit(toaccount, amount);

@@ -5,6 +5,8 @@
  */
 package tarea1auditoria;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -280,7 +282,6 @@ public class BankTest {
         }
         catch (AccountExistsException e)
         {
-            
         }
     }
     //Prueba del método removeTimedPayment
@@ -315,9 +316,18 @@ public class BankTest {
     //Prueba del método tick
     @Test
     public void testTick() {
-    }
-    //Prueba de excepción AccountDoesNotExistException en el método tick
-    @Test
-    public void testTickToAccountThatDoesntExist() {
+        Money money = new Money(300000, clpCurrency);
+        Bank santander = new Bank("Santander",clpCurrency);
+        try
+        {
+            bank.openAccount("000");
+            santander.openAccount("111");
+            bank.addTimedPayment("000", "1234", 60, 30, money, santander, "111");
+            bank.tick();
+        } catch (AccountDoesNotExistException ex) {
+        } catch (NotWithdrawException ex) {
+        } catch (NegativeAddException ex) {
+        } catch (AccountExistsException e) {            
+        }
     }
 }
