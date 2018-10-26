@@ -218,6 +218,29 @@ public class BankTest {
         } 
         assertTrue(accountDoesntExists);
     }
+    //Prueba de excepción AccountDoesNotExistException en el método transfer
+    @Test
+    public void testMoneyTransferToAccountThatDoesntExists2() {
+        boolean accountDoesntExists = false;
+        Money depositMoney = new Money(600000, clpCurrency);
+        Money transferMoney = new Money(150000, clpCurrency);
+        Bank santander = new Bank("Santander",clpCurrency);
+        try
+        {
+            bank.transfer("123",santander,"111",transferMoney);
+        }
+        catch (AccountDoesNotExistException e)
+        {
+            accountDoesntExists = true;
+        }
+        catch (NotWithdrawException e)
+        {
+        }  
+        catch (NegativeAddException e)
+        {
+        } 
+        assertTrue(accountDoesntExists);
+    }
     //Prueba del método transfer
     @Test
     public void testMoneyTransferInSameBank() {
@@ -285,6 +308,10 @@ public class BankTest {
         } 
     }
     
+    @Test
+    public void testGetBankName() {
+        assertTrue(bank.getName().compareToIgnoreCase("BCI")==0);
+    }
     //Prueba del método tick
     @Test
     public void testTick() {

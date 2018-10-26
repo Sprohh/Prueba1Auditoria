@@ -112,6 +112,30 @@ public class MoneyTest {
         assertTrue(money.negate().getAmount() == -1000);
     }
     
+    @Test
+    public void testCompareToEquals() {
+        Currency currency = new Currency ("CLP", 0.0015);
+        Money money = new Money(1000, currency );
+        Money money2 = new Money(1000, currency );
+        Object object = (Object) money2;
+        assertTrue(money.compareTo(object)==0);
+    }
     
+    @Test
+    public void testCompareToHigher() {
+        Currency currency = new Currency ("CLP", 0.0015);
+        Money money = new Money(1000, currency );
+        Money money2 = new Money(2000, currency );
+        Object object = (Object) money2;
+        assertTrue(money.compareTo(object)==1);
+    }
     
+    @Test
+    public void testCompareToMinor() {
+        Currency currency = new Currency ("CLP", 0.0015);
+        Money money = new Money(1000, currency );
+        Money money2 = new Money(500, currency );
+        Object object = (Object) money2;
+        assertTrue(money.compareTo(object)==-1);
+    }
 }

@@ -34,4 +34,11 @@ public class CurrencyTest {
         Currency mexicanMoney = new Currency("MXP", 0.052);
         assertTrue( chileanMoney.valueInThisCurrency(100, mexicanMoney) == 3333);
     }
+    
+    @Test
+    public void testSetRate() {
+        Currency chileanMoney = new Currency("CLP", 0.0015);
+        chileanMoney.setRate(0.0016);
+        assertTrue( chileanMoney.getRate() == 0.0016);
+    }
 }
